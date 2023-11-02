@@ -306,5 +306,3 @@ address callId = switchboard.sendRequest{value: msg.value}(
     orderData
 );
 ```
-
-# yada

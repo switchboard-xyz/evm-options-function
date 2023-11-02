@@ -157,7 +157,7 @@ Run the following to test your function:
 export CALLBACK_ADDRESS=${SWITCHBOARD_ADDRESS?} # can be any valid address
 
 # test run the function - modify these params to match your desired output
-sb evm function test --chain arbitrum --parameters "address:0xF4e5FCA098Ef266efc038D8931dBade58c1D15E0,string:ETH,uint256:1698781846
+sb evm function test --chain arbitrum --parameters "string:ETH,uint256:1698781846
 ,uint256:2000,uint8:0" --network testnet
 ```
 
@@ -166,7 +166,6 @@ The above corresponds to the following parameters in the function:
 ```rust
 #[derive(EthAbiType, EthAbiCodec, Default, Debug, Clone)]
 pub struct Order {
-    cid: Address, // target contract address
     market_id: String, // asset name
     exp_date: U256, // expiration date
     strike_price: U256, // strike price in integers (this ultimately should depend on the asset / exchange)
@@ -235,7 +234,7 @@ pnpm exec hardhat run scripts/update_function_config.ts --network arbitrumTestne
 And the following to update the function measurement:
 
 ```bash
-sb evm function add-enclave $FUNCTION_ID --chain arbitrum --network testnet --mrEnclave $MEASUREMENT --account ../.kp.txt --programId $SWITCHBOARD_ADDRESS_ARBITRUM_TESTNET
+sb evm function add-enclave $FUNCTION_ID --chain arbitrum --network testnet --mrEnclave $MEASUREMENT --account /path/to/signer --programId $SWITCHBOARD_ADDRESS_ARBITRUM_TESTNET
 ```
 
 ### Gas Limits
@@ -248,7 +247,7 @@ You can use the Switchboard cli to create a request to your function:
 
 ```bash
 # for creating a one-off run of the function, you can use the following
-sb evm request create $FUNCTION_ID --chain arbitrum --parameters "address:0xF4e5FCA098Ef266efc038D8931dBade58c1D15E0,string:ETH,uint256:1698781846
+sb evm request create $FUNCTION_ID --chain arbitrum --parameters "string:ETH,uint256:1698781846
 ,uint256:2000,uint8:0" --account /path/to/keypair --network testnet --programId $SWITCHBOARD_ADDRESS_ARBITRUM_TESTNET
 ```
 
@@ -260,7 +259,7 @@ For creating a Routine, which is a recurring function call, you can modify the p
 
 ```bash
 #  for creating a recurring run of the function, you can use the following
-sb evm routine create $FUNCTION_ID --chain arbitrum --schedule "*/10 * * * * *" --account /path/to/keypair --network testnet --programId $SWITCHBOARD_ADDRESS_ARBITRUM_TESTNET --parameters="address:0xF4e5FCA098Ef266efc038D8931dBade58c1D15E0,string:ETH,uint256:1698781846
+sb evm routine create $FUNCTION_ID --chain arbitrum --schedule "*/10 * * * * *" --account /path/to/keypair --network testnet --programId $SWITCHBOARD_ADDRESS_ARBITRUM_TESTNET --parameters="string:ETH,uint256:1698781846
 ,uint256:2000,uint8:0"
 export ROUTINE_ID=<YOUR ROUTINE ID>
 
@@ -285,7 +284,6 @@ Last gotcha: when encoding parameters with variable length fields Solidity-side,
 ```solidity
 // Get order data from the market
 ReceiverLib.Order memory order = ReceiverLib.Order({
-    cid: address(this),
     marketId: "ETH",
     expDate: expirationDate,  // uint256 unix timestamp
     strikePrice: strikePrice, // uint256
@@ -295,7 +293,6 @@ ReceiverLib.Order memory order = ReceiverLib.Order({
 // Encode the order data to pass to the switchboard function request
 // NOTE: We spread the fields here because solidity encodes structs with variable length fields differently
 bytes memory orderData = abi.encode(
-    order.cid,
     order.marketId, // <-- strings are variable length
     order.expDate,
     order.strikePrice,

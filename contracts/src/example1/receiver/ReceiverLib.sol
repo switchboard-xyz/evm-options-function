@@ -11,7 +11,6 @@ library ReceiverLib {
     }
 
     struct Order {
-        address cid;
         string marketId;
         uint256 expDate;
         uint256 strikePrice;

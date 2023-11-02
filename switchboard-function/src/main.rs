@@ -19,8 +19,6 @@ abigen!(
     r#"[ function callback(address, uint256, uint256[]) ]"#,
 );
 static CLIENT_URL: &str = "https://goerli-rollup.arbitrum.io/rpc";
-
-#[allow(dead_code)]
 static RECEIVER: &str = env!("CALLBACK_ADDRESS");
 
 #[derive(Debug, Deserialize)]
@@ -62,7 +60,6 @@ struct DeribitResult {
 
 #[derive(EthAbiType, EthAbiCodec, Default, Debug, Clone)]
 pub struct Order {
-    callback_pid: Address, // target contract address
     market_id: String, // asset name
     exp_date: U256, // expiration date
     strike_price: U256, // strike price in integers (this ultimately should depend on the asset / exchange)
@@ -79,11 +76,8 @@ async fn sb_function<M: Middleware, S: Signer>(
 ) -> Result<Vec<FnCall<M, S>>, Error> {
 
     // --- Initialize clients ---
-    let receiver_contract = Receiver::new(params.callback_pid, client.into());
-
-    // You can use the receiver from the environment variable like so:
-    // let receiver: Address = RECEIVER.parse().map_err(|_| Error::ParseError)?;
-    // let receiver_contract = Receiver::new(receiver, client.into());
+    let receiver: Address = RECEIVER.parse().map_err(|_| Error::ParseError)?;
+    let receiver_contract = Receiver::new(receiver, client.into());
 
     // --- Get URL from params ---
 
@@ -167,23 +161,14 @@ mod tests {
     #[tokio::test]
     async fn test() {
 
-        // Get bytes input string
-        let inputs = "0x000000000000000000000000000000000000000000000000000000000000002000000000000000000000000075d3b3f06c4c2b550a32f6f03114521c2a94a65100000000000000000000000000000000000000000000000000000000000000a00000000000000000000000000000000000000000000000000000000065415a9600000000000000000000000000000000000000000000000000000000000007d0000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000034554480000000000000000000000000000000000000000000000000000000000";
-
-        // Decode bytes input string
-        let decoded = Order::decode(Bytes::from_str(inputs).unwrap()).unwrap();
-
-        // Print 
-        println!("{:?}", decoded);
-
-        // let derebit_response: DeribitResponse = reqwest::get(
-        //     "https://www.deribit.com/api/v2/public/get_order_book?instrument_name=ETH-29SEP23-2000-C",
-        // )
-        //     .await
-        //     .unwrap()
-        //     .json()
-        //     .await
-        //     .unwrap();
-        // println!("{:#?}", derebit_response);
+        let derebit_response: DeribitResponse = reqwest::get(
+            "https://www.deribit.com/api/v2/public/get_order_book?instrument_name=ETH-29SEP23-2000-C",
+        )
+            .await
+            .unwrap()
+            .json()
+            .await
+            .unwrap();
+        println!("{:#?}", derebit_response);
     }
 }

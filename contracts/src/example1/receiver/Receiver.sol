@@ -53,8 +53,7 @@ contract Receiver is SwitchboardCallbackHandler {
         // Encode the order data to pass to the switchboard function request
         // NOTE: We spread the fields here because solidity encodes structs with variable length fields differently
         bytes memory orderData = abi.encode(
-            order.cid,
-            order.marketId, // <-- strings are variable length
+            order.marketId,
             order.expDate,
             order.strikePrice,
             order.optionType

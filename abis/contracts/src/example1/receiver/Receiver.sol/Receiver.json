@@ -1,0 +1,11 @@
+[
+  "error InsufficientFunding(uint256,uint256)",
+  "error SwitchboardCallbackHandler__InvalidFunction(address,address)",
+  "error SwitchboardCallbackHandler__InvalidSender(address,address)",
+  "error SwitchboardCallbackHandler__MissingFunctionId()",
+  "function callback(address,uint256,uint256[])",
+  "function getData() view returns (tuple(uint256,uint256[])[])",
+  "function getOrders() view returns (tuple(address,string,uint256,uint256,uint8)[])",
+  "function getSwitchboardRequests() view returns (tuple(address,string,uint256,uint256,uint8)[], tuple(address,address,uint256,bytes,bool,uint256,uint256,uint256,uint8,uint256,uint8)[])",
+  "function triggerOrder(uint256,uint256,uint8) payable"
+]

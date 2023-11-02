@@ -1,0 +1,5 @@
+[
+  "error SwitchboardCallbackHandler__InvalidFunction(address,address)",
+  "error SwitchboardCallbackHandler__InvalidSender(address,address)",
+  "error SwitchboardCallbackHandler__MissingFunctionId()"
+]

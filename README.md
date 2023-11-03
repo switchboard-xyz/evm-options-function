@@ -157,8 +157,7 @@ Run the following to test your function:
 export CALLBACK_ADDRESS=${SWITCHBOARD_ADDRESS?} # can be any valid address
 
 # test run the function - modify these params to match your desired output
-sb evm function test --chain arbitrum --parameters "string:ETH,uint256:1698781846
-,uint256:2000,uint8:0" --network testnet
+sb evm function test --chain arbitrum --parameters "string:ETH,uint256:1698781846,uint256:2000,uint8:0" --network testnet
 ```
 
 The above corresponds to the following parameters in the function:
@@ -247,8 +246,8 @@ You can use the Switchboard cli to create a request to your function:
 
 ```bash
 # for creating a one-off run of the function, you can use the following
-sb evm request create $FUNCTION_ID --chain arbitrum --parameters "string:ETH,uint256:1698781846
-,uint256:2000,uint8:0" --account /path/to/keypair --network testnet --programId $SWITCHBOARD_ADDRESS_ARBITRUM_TESTNET
+sb evm request create $FUNCTION_ID --chain arbitrum --parameters "string:ETH,uint256:1698781846,uint256:2000,uint8:0" \
+    --account /path/to/keypair --network testnet --programId $SWITCHBOARD_ADDRESS_ARBITRUM_TESTNET
 ```
 
 NOTE: the above will not work with the example contract as it is not set up to handle uninitialized calls
@@ -259,7 +258,8 @@ For creating a Routine, which is a recurring function call, you can modify the p
 
 ```bash
 #  for creating a recurring run of the function, you can use the following
-sb evm routine create $FUNCTION_ID --chain arbitrum --schedule "*/10 * * * * *" --account /path/to/keypair --network testnet --programId $SWITCHBOARD_ADDRESS_ARBITRUM_TESTNET --parameters="string:ETH,uint256:1698781846
+sb evm routine create $FUNCTION_ID --chain arbitrum --schedule "*/10 * * * * *" --account /path/to/keypair --network testnet --programId $SWITCHBOARD_ADDRESS_ARBITRUM_TESTNET \
+    --parameters="string:ETH,uint256:1698781846
 ,uint256:2000,uint8:0"
 export ROUTINE_ID=<YOUR ROUTINE ID>
 

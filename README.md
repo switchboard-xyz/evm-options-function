@@ -258,9 +258,9 @@ For creating a Routine, which is a recurring function call, you can modify the p
 
 ```bash
 #  for creating a recurring run of the function, you can use the following
-sb evm routine create $FUNCTION_ID --chain arbitrum --schedule "*/10 * * * * *" --account /path/to/keypair --network testnet --programId $SWITCHBOARD_ADDRESS_ARBITRUM_TESTNET \
-    --parameters="string:ETH,uint256:1698781846
-,uint256:2000,uint8:0"
+sb evm routine create $FUNCTION_ID --chain arbitrum --schedule "*/10 * * * * *" --account /path/to/keypair --network testnet \
+    --programId $SWITCHBOARD_ADDRESS_ARBITRUM_TESTNET \
+    --parameters="string:ETH,uint256:1698781846,uint256:2000,uint8:0"
 export ROUTINE_ID=<YOUR ROUTINE ID>
 
 ## For funding the function, you can use the following:

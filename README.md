@@ -249,7 +249,7 @@ You can use the Switchboard cli to create a request to your function:
 
 ```bash
 # for creating a one-off run of the function, you can use the following
-sb evm request create $FUNCTION_ID --chain arbitrum --parameters "string:ETH,uint256:1698781846,uint256:2000,uint8:0" \
+sb evm request send $FUNCTION_ID --chain arbitrum --parameters "string:ETH,uint256:1698781846,uint256:2000,uint8:0" \
     --account /path/to/keypair --network testnet --programId $SWITCHBOARD_ADDRESS_ARBITRUM_TESTNET
 ```
 

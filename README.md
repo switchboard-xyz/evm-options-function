@@ -189,7 +189,7 @@ You can use the Switchboard cli to bind this docker container to an on-chain rep
 
 ```bash
 export SWITCHBOARD_ADDRESS_ARBITRUM_TESTNET=0xA3c9F9F6E40282e1366bdC01C1D30F7F7F58888e
-export QUEUE_ID=0x54f8A91bE5baAD3E2368b00A11bF4012EeA6b031F # default testnet queue
+export QUEUE_ID=0x54f8A91bE5baAD3E2368b00A11bF4012EA6b031F # default testnet queue
 export MEASUREMENT=<YOUR CONTAINER MEASUREMENT>
 export CLUSTER=arbitrumTestnet # or arbitrumMainnet etc
 sb evm function create $QUEUE_ID --container ${CONTAINER_NAME} --containerRegistry dockerhub  \
